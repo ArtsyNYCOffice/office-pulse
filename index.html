@@ -113,7 +113,7 @@
     padding-bottom:4px; flex:1; align-items:stretch; justify-content:center;
   }
   .hour{
-    background:var(--chip-bg); border-radius:22px; padding:40px 16px; text-align:center; min-width:112px;
+    background:var(--chip-bg); border-radius:22px; padding:30px 10px; text-align:center; min-width:88px;
     border-bottom:4px solid var(--text-dim); display:flex; flex-direction:column; justify-content:center; gap:10px;
   }
   .hour.cat-sun{border-bottom-color:var(--accent2);}
@@ -121,16 +121,16 @@
   .hour.cat-cloud{border-bottom-color:var(--accent3);}
   .hour .t{font-size:clamp(16px,1.8vw,20px); color:var(--text); font-weight:800; white-space:nowrap;}
   .hour .ic{
-    font-size:clamp(46px,5.1vw,64px); width:clamp(64px,7vw,88px); height:clamp(64px,7vw,88px);
-    margin:4px auto; border-radius:20px; display:flex; align-items:center; justify-content:center;
+    font-size:clamp(38px,4.2vw,52px); width:clamp(52px,5.6vw,70px); height:clamp(52px,5.6vw,70px);
+    margin:4px auto; border-radius:18px; display:flex; align-items:center; justify-content:center;
     background:linear-gradient(150deg, var(--accent4), var(--accent));
   }
   .hour .tp{font-weight:800; font-size:clamp(20px,2.3vw,28px); font-family:'Manrope',sans-serif;}
   .hour .pop{font-size:clamp(12px,1.2vw,14px); color:var(--rain); font-weight:700; margin-top:2px;}
-  .days{display:flex; flex-direction:column; gap:10px; flex:1; justify-content:space-between;}
+  .days{display:flex; flex-direction:column; gap:10px; flex:1; justify-content:space-between; min-height:0; overflow:hidden;}
   .day{
     display:grid; grid-template-columns: 90px 70px 1fr auto; align-items:center; gap:14px;
-    padding:14px 16px; border-radius:18px; background:var(--chip-bg); flex:1;
+    padding:14px 16px; border-radius:18px; background:var(--chip-bg); flex:1; min-height:0; overflow:hidden;
   }
   .day .name{font-weight:700; font-size:clamp(16px,1.7vw,20px);}
   .day .name .sub{display:block; color:var(--text-dim); font-weight:500; font-size:0.75em;}
