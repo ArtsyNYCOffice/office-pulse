@@ -119,24 +119,24 @@
   .hour.cat-sun{border-bottom-color:var(--accent2);}
   .hour.cat-rain{border-bottom-color:var(--rain);}
   .hour.cat-cloud{border-bottom-color:var(--accent3);}
-  .hour .t{font-size:clamp(11px,1.1vw,13px); color:var(--text-dim); font-weight:700;}
+  .hour .t{font-size:clamp(12px,1.2vw,14px); color:var(--text); font-weight:800;}
   .hour .ic{font-size:clamp(26px,2.9vw,34px); margin:4px 0;}
   .hour .tp{font-weight:800; font-size:clamp(16px,1.8vw,20px); font-family:'Manrope',sans-serif;}
   .hour .pop{font-size:clamp(10px,1vw,12px); color:var(--rain); font-weight:700; margin-top:2px;}
   .days{display:flex; flex-direction:column; gap:10px; flex:1; justify-content:space-between;}
   .day{
-    display:grid; grid-template-columns: 90px 52px 1fr auto; align-items:center; gap:14px;
+    display:grid; grid-template-columns: 90px 64px 1fr auto; align-items:center; gap:14px;
     padding:14px 16px; border-radius:18px; background:var(--chip-bg); flex:1;
   }
-  .day .name{font-weight:700; font-size:clamp(14px,1.4vw,17px);}
+  .day .name{font-weight:700; font-size:clamp(16px,1.7vw,20px);}
   .day .name .sub{display:block; color:var(--text-dim); font-weight:500; font-size:0.75em;}
   .day .ic{
-    font-size:clamp(20px,2.2vw,28px); text-align:center; width:46px; height:46px; border-radius:14px;
+    font-size:clamp(26px,2.9vw,36px); text-align:center; width:58px; height:58px; border-radius:16px;
     display:flex; align-items:center; justify-content:center;
     background:linear-gradient(150deg, var(--accent4), var(--accent));
   }
-  .day .cond{color:var(--text-dim); font-size:clamp(12px,1.2vw,14px);}
-  .day .range{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(14px,1.5vw,18px); white-space:nowrap; text-align:right; color:var(--accent2);}
+  .day .cond{color:var(--text-dim); font-size:clamp(14px,1.5vw,18px); font-weight:700;}
+  .day .range{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(16px,1.7vw,20px); white-space:nowrap; text-align:right; color:var(--accent2);}
   .day .range .lo{color:var(--text-dim); font-weight:600;}
   .updated{color:var(--text-dim); font-size:clamp(10px,1vw,12px); margin-top:12px; text-align:right; flex-shrink:0;}
   .announce{
@@ -265,7 +265,7 @@
       document.getElementById('statHumidity').textContent = Math.round(data.hourly.relative_humidity_2m[startIdx])+"%";
       document.getElementById('statWind').textContent = Math.round(cur.windspeed)+" mph";
       var hourlyHtml = "";
-      for(var j=startIdx; j<Math.min(startIdx+14, times.length); j++){
+      for(var j=startIdx; j<Math.min(startIdx+8, times.length); j++){
         var t = fmtHour(times[j]);
         var isDayHr = hourNum(times[j]) >= 6 && hourNum(times[j]) < 20;
         var ic = iconFor(data.hourly.weathercode[j], isDayHr);
