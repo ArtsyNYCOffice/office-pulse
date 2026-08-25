@@ -128,15 +128,16 @@
   }
   .hour .tp{font-weight:800; font-size:clamp(20px,2.3vw,28px); font-family:'Manrope',sans-serif;}
   .hour .pop{font-size:clamp(12px,1.2vw,14px); color:var(--rain); font-weight:700; margin-top:2px;}
-  .days{display:flex; flex-direction:column; gap:10px; flex:1; justify-content:space-between; min-height:0; overflow:hidden;}
+  .days{display:flex; flex-direction:column; gap:8px; flex:1; justify-content:space-between; min-height:0; overflow:hidden;}
   .day{
-    display:grid; grid-template-columns: 90px 70px 1fr auto; align-items:center; gap:14px;
-    padding:14px 16px; border-radius:18px; background:var(--chip-bg); flex:1; min-height:0; overflow:hidden;
+    display:grid; grid-template-columns: 90px auto 1fr auto; align-items:center; gap:14px;
+    padding:10px 16px; border-radius:18px; background:var(--chip-bg); flex:1; min-height:0; overflow:hidden;
   }
   .day .name{font-weight:700; font-size:clamp(16px,1.7vw,20px);}
   .day .name .sub{display:block; color:var(--text-dim); font-weight:500; font-size:0.75em;}
   .day .ic{
-    font-size:clamp(32px,3.6vw,44px); line-height:1; text-align:center; width:64px; height:64px; border-radius:16px;
+    font-size:clamp(24px,3.6vw,44px); line-height:1; text-align:center;
+    width:clamp(40px,6.5vh,64px); height:clamp(40px,6.5vh,64px); border-radius:16px;
     display:flex; align-items:center; justify-content:center; justify-self:center;
     background:linear-gradient(150deg, var(--accent4), var(--accent));
   }
