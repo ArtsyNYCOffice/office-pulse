@@ -9,27 +9,41 @@
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap');
 
   :root{
-    --bg: #eef1f6;
+    --bg: #eef0fb;
+    --bg-grad: radial-gradient(circle at 8% 0%, #ffe3d1 0%, rgba(255,227,209,0) 42%),
+               radial-gradient(circle at 100% 12%, #d7e8ff 0%, rgba(215,232,255,0) 45%),
+               radial-gradient(circle at 50% 100%, #e3d9ff 0%, rgba(227,217,255,0) 50%),
+               #eef0fb;
     --panel: #ffffff;
-    --panel-border: #dde3ee;
-    --text: #10162b;
-    --text-dim: #5b6478;
-    --accent: #2f5dfc;
-    --rain: #2f8fe0;
-    --shadow: 0 10px 30px rgba(20,30,60,0.08);
-    --chip-bg: #f4f6fb;
+    --panel-border: #e3e0f5;
+    --text: #171233;
+    --text-dim: #675f8a;
+    --accent: #4f5bff;
+    --accent2: #ff6b57;
+    --accent3: #9b5cff;
+    --accent4: #12c2b5;
+    --rain: #1f9bff;
+    --shadow: 0 12px 32px rgba(60,40,120,0.10);
+    --chip-bg: #f3f1fc;
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg: #0a0d16; --panel: #12172a; --panel-border: #232a44;
-      --text: #eef1fb; --text-dim: #8991ac; --accent: #6d8dff; --rain: #6ec2ff;
-      --shadow: 0 10px 30px rgba(0,0,0,0.4); --chip-bg: #171d34;
+      --bg: #0b0a17;
+      --bg-grad: radial-gradient(circle at 8% 0%, rgba(255,107,87,0.16) 0%, rgba(255,107,87,0) 42%),
+                 radial-gradient(circle at 100% 12%, rgba(79,91,255,0.22) 0%, rgba(79,91,255,0) 45%),
+                 radial-gradient(circle at 50% 100%, rgba(155,92,255,0.18) 0%, rgba(155,92,255,0) 50%),
+                 #0b0a17;
+      --panel: #171532; --panel-border: #2b2650;
+      --text: #f1eefb; --text-dim: #a29bc7;
+      --accent: #7b85ff; --accent2: #ff8a76; --accent3: #b98bff; --accent4: #3fe0d1;
+      --rain: #5fc2ff;
+      --shadow: 0 12px 32px rgba(0,0,0,0.45); --chip-bg: #201c42;
     }
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--bg); color:var(--text);
+    background:var(--bg-grad); color:var(--text);
     font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     min-height:100vh; padding:clamp(14px,2vw,32px);
     display:flex; flex-direction:column; gap:clamp(12px,1.6vw,20px);
@@ -37,9 +51,9 @@
   .top{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;}
   .brand{display:flex; align-items:center; gap:14px;}
   .brand .mark{
-    width:44px; height:44px; border-radius:12px;
-    background:linear-gradient(135deg,var(--accent),var(--rain));
-    display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:var(--shadow);
+    width:48px; height:48px; border-radius:14px;
+    background:linear-gradient(135deg,var(--accent2),var(--accent3) 55%,var(--accent));
+    display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:var(--shadow);
   }
   .brand .name{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(18px,2vw,24px);}
   .brand .sub{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px); margin-top:2px;}
@@ -49,31 +63,53 @@
   .datestr{color:var(--text-dim); font-size:clamp(13px,1.4vw,17px); font-weight:600; margin-top:4px;}
   .grid{display:grid; grid-template-columns: 1.15fr 1fr; gap:clamp(12px,1.6vw,20px); flex:1; min-height:0;}
   @media (max-width: 900px){ .grid{grid-template-columns:1fr;} }
-  .card{background:var(--panel); border:1px solid var(--panel-border); border-radius:20px; box-shadow:var(--shadow); padding:clamp(16px,2vw,26px);}
+  .card{
+    background:var(--panel); border:1px solid var(--panel-border); border-radius:22px;
+    box-shadow:var(--shadow); padding:clamp(16px,2vw,26px);
+    border-top:5px solid var(--card-accent, var(--accent)); position:relative;
+  }
+  .card.weather-card{--card-accent: var(--rain);}
+  .card.days-card{--card-accent: var(--accent3);}
   .card h2{margin:0 0 14px 0; font-family:'Manrope',sans-serif; font-size:clamp(14px,1.5vw,18px); font-weight:700; display:flex; align-items:center; gap:8px;}
-  .card h2 .tag{font-size:11px; font-weight:700; color:var(--text-dim); background:var(--chip-bg); padding:3px 9px; border-radius:999px; text-transform:uppercase; letter-spacing:.06em;}
+  .card h2 .tag{font-size:11px; font-weight:700; color:#fff; background:var(--card-accent, var(--accent)); padding:4px 10px; border-radius:999px; text-transform:uppercase; letter-spacing:.06em;}
   .now{display:flex; align-items:center; gap:22px; margin-bottom:18px; flex-wrap:wrap;}
-  .now .icon{font-size:clamp(46px,5.5vw,66px); line-height:1;}
-  .now .temp{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(42px,5.5vw,60px); line-height:1;}
+  .now .icon{
+    font-size:clamp(38px,4.4vw,52px); line-height:1; width:clamp(70px,7vw,92px); height:clamp(70px,7vw,92px);
+    border-radius:20px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(150deg, var(--rain), var(--accent3));
+  }
+  .now .temp{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(42px,5.5vw,60px); line-height:1; background:linear-gradient(120deg,var(--accent2),var(--accent3)); -webkit-background-clip:text; background-clip:text; color:transparent;}
   .now .cond{color:var(--text-dim); font-size:clamp(14px,1.4vw,17px); font-weight:600;}
   .now .meta{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px); margin-top:2px;}
-  .hourly-row{display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:8px; overflow-x:auto; padding-bottom:4px;}
-  .hour{background:var(--chip-bg); border-radius:14px; padding:12px 6px 14px; text-align:center; min-width:58px;}
-  .hour .t{font-size:clamp(10px,1vw,12px); color:var(--text-dim); font-weight:600;}
+  .hourly-row{display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:9px; overflow-x:auto; padding-bottom:4px;}
+  .hour{
+    background:var(--chip-bg); border-radius:16px; padding:12px 6px 14px; text-align:center; min-width:58px;
+    border-bottom:4px solid var(--rain);
+  }
+  .hour:nth-child(3n+2){border-bottom-color:var(--accent3);}
+  .hour:nth-child(3n+3){border-bottom-color:var(--accent2);}
+  .hour .t{font-size:clamp(10px,1vw,12px); color:var(--text-dim); font-weight:700;}
   .hour .ic{font-size:clamp(20px,2.2vw,26px); margin:6px 0;}
   .hour .tp{font-weight:800; font-size:clamp(14px,1.5vw,17px); font-family:'Manrope',sans-serif;}
   .hour .pop{font-size:clamp(9px,0.95vw,11px); color:var(--rain); font-weight:700; margin-top:3px;}
-  .days{display:flex; flex-direction:column; gap:8px;}
-  .day{display:grid; grid-template-columns: 90px 34px 1fr auto; align-items:center; gap:12px; padding:10px 12px; border-radius:14px; background:var(--chip-bg);}
+  .days{display:flex; flex-direction:column; gap:9px;}
+  .day{
+    display:grid; grid-template-columns: 90px 44px 1fr auto; align-items:center; gap:12px;
+    padding:10px 12px; border-radius:16px; background:var(--chip-bg);
+  }
   .day .name{font-weight:700; font-size:clamp(13px,1.3vw,15px);}
   .day .name .sub{display:block; color:var(--text-dim); font-weight:500; font-size:0.75em;}
-  .day .ic{font-size:clamp(18px,2vw,24px); text-align:center;}
+  .day .ic{
+    font-size:clamp(16px,1.8vw,22px); text-align:center; width:38px; height:38px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(150deg, var(--accent4), var(--accent));
+  }
   .day .cond{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px);}
-  .day .range{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(13px,1.4vw,16px); white-space:nowrap; text-align:right;}
+  .day .range{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(13px,1.4vw,16px); white-space:nowrap; text-align:right; color:var(--accent2);}
   .day .range .lo{color:var(--text-dim); font-weight:600;}
   .updated{color:var(--text-dim); font-size:clamp(10px,1vw,12px); margin-top:12px; text-align:right;}
   .announce{
-    background:linear-gradient(135deg, var(--accent), var(--rain)); border-radius:20px;
+    background:linear-gradient(120deg, var(--accent2), var(--accent3) 55%, var(--accent)); border-radius:20px;
     padding:clamp(16px,2vw,24px) clamp(18px,2.4vw,30px); color:#fff; box-shadow:var(--shadow);
     display:flex; align-items:center; gap:18px; min-height:clamp(64px,9vh,110px);
   }
@@ -98,7 +134,7 @@
 </div>
 
 <div class="grid">
-  <div class="card">
+  <div class="card weather-card">
     <h2>Today &middot; Hour by Hour <span class="tag">New York, NY</span></h2>
     <div class="now">
       <div class="icon" id="nowIcon">🌤️</div>
@@ -112,7 +148,7 @@
     <div class="hourly-row" id="hourlyRow"></div>
   </div>
 
-  <div class="card">
+  <div class="card days-card">
     <h2>Next Few Days</h2>
     <div class="days" id="daysList"></div>
     <div class="updated" id="updatedNote">Loading forecast…</div>
