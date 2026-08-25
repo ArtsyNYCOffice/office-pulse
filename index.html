@@ -51,19 +51,13 @@
     min-height:100vh; padding:clamp(14px,2vw,32px);
     display:flex; flex-direction:column; gap:clamp(12px,1.6vw,20px);
   }
-  .top{display:flex; align-items:flex-start; justify-content:flex-end; gap:16px; flex-wrap:wrap;}
-  .brand{display:flex; align-items:center; gap:14px;}
-  .brand .mark{
-    width:48px; height:48px; border-radius:14px;
-    background:linear-gradient(135deg,var(--accent2),var(--accent3) 55%,var(--accent));
-    display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:var(--shadow);
-  }
-  .brand .name{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(18px,2vw,24px);}
-  .brand .sub{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px); margin-top:2px;}
-  .clockbox{text-align:right;}
+  .top{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;}
   .clock{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(40px,7vw,86px); line-height:1; letter-spacing:-1px; white-space:nowrap;}
   .clock .ampm{font-size:0.38em; color:var(--text-dim); margin-left:6px; font-weight:700;}
-  .datestr{color:var(--text-dim); font-size:clamp(13px,1.4vw,17px); font-weight:600; margin-top:4px;}
+  .datestr{
+    color:var(--text); font-family:'Manrope',sans-serif; font-weight:700;
+    font-size:clamp(20px,2.6vw,34px); text-align:right; line-height:1.2; margin-top:4px;
+  }
   .grid{display:grid; grid-template-columns: 1.15fr 1fr; gap:clamp(12px,1.6vw,20px); flex:1; min-height:0;}
   @media (max-width: 900px){ .grid{grid-template-columns:1fr;} }
   .card{
@@ -145,10 +139,8 @@
 <body>
 
 <div class="top">
-  <div class="clockbox">
-    <div class="clock" id="clock">--:--<span class="ampm" id="ampm"></span></div>
-    <div class="datestr" id="datestr">&nbsp;</div>
-  </div>
+  <div class="clock" id="clock">--:--<span class="ampm" id="ampm"></span></div>
+  <div class="datestr" id="datestr">&nbsp;</div>
 </div>
 
 <div class="grid">
