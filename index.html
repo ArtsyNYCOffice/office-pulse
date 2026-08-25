@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Office Pulse</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%BA%3C/text%3E%3C/svg%3E">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap');
+
+  :root{
+    --bg: #eef1f6;
+    --panel: #ffffff;
+    --panel-border: #dde3ee;
+    --text: #10162b;
+    --text-dim: #5b6478;
+    --accent: #2f5dfc;
+    --rain: #2f8fe0;
+    --shadow: 0 10px 30px rgba(20,30,60,0.08);
+    --chip-bg: #f4f6fb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg: #0a0d16; --panel: #12172a; --panel-border: #232a44;
+      --text: #eef1fb; --text-dim: #8991ac; --accent: #6d8dff; --rain: #6ec2ff;
+      --shadow: 0 10px 30px rgba(0,0,0,0.4); --chip-bg: #171d34;
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    min-height:100vh; padding:clamp(14px,2vw,32px);
+    display:flex; flex-direction:column; gap:clamp(12px,1.6vw,20px);
+  }
+  .top{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .brand{display:flex; align-items:center; gap:14px;}
+  .brand .mark{
+    width:44px; height:44px; border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--rain));
+    display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:var(--shadow);
+  }
+  .brand .name{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(18px,2vw,24px);}
+  .brand .sub{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px); margin-top:2px;}
+  .clockbox{text-align:right;}
+  .clock{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(40px,7vw,86px); line-height:1; letter-spacing:-1px; white-space:nowrap;}
+  .clock .ampm{font-size:0.38em; color:var(--text-dim); margin-left:6px; font-weight:700;}
+  .datestr{color:var(--text-dim); font-size:clamp(13px,1.4vw,17px); font-weight:600; margin-top:4px;}
+  .grid{display:grid; grid-template-columns: 1.15fr 1fr; gap:clamp(12px,1.6vw,20px); flex:1; min-height:0;}
+  @media (max-width: 900px){ .grid{grid-template-columns:1fr;} }
+  .card{background:var(--panel); border:1px solid var(--panel-border); border-radius:20px; box-shadow:var(--shadow); padding:clamp(16px,2vw,26px);}
+  .card h2{margin:0 0 14px 0; font-family:'Manrope',sans-serif; font-size:clamp(14px,1.5vw,18px); font-weight:700; display:flex; align-items:center; gap:8px;}
+  .card h2 .tag{font-size:11px; font-weight:700; color:var(--text-dim); background:var(--chip-bg); padding:3px 9px; border-radius:999px; text-transform:uppercase; letter-spacing:.06em;}
+  .now{display:flex; align-items:center; gap:22px; margin-bottom:18px; flex-wrap:wrap;}
+  .now .icon{font-size:clamp(46px,5.5vw,66px); line-height:1;}
+  .now .temp{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(42px,5.5vw,60px); line-height:1;}
+  .now .cond{color:var(--text-dim); font-size:clamp(14px,1.4vw,17px); font-weight:600;}
+  .now .meta{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px); margin-top:2px;}
+  .hourly-row{display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:8px; overflow-x:auto; padding-bottom:4px;}
+  .hour{background:var(--chip-bg); border-radius:14px; padding:12px 6px 14px; text-align:center; min-width:58px;}
+  .hour .t{font-size:clamp(10px,1vw,12px); color:var(--text-dim); font-weight:600;}
+  .hour .ic{font-size:clamp(20px,2.2vw,26px); margin:6px 0;}
+  .hour .tp{font-weight:800; font-size:clamp(14px,1.5vw,17px); font-family:'Manrope',sans-serif;}
+  .hour .pop{font-size:clamp(9px,0.95vw,11px); color:var(--rain); font-weight:700; margin-top:3px;}
+  .days{display:flex; flex-direction:column; gap:8px;}
+  .day{display:grid; grid-template-columns: 90px 34px 1fr auto; align-items:center; gap:12px; padding:10px 12px; border-radius:14px; background:var(--chip-bg);}
+  .day .name{font-weight:700; font-size:clamp(13px,1.3vw,15px);}
+  .day .name .sub{display:block; color:var(--text-dim); font-weight:500; font-size:0.75em;}
+  .day .ic{font-size:clamp(18px,2vw,24px); text-align:center;}
+  .day .cond{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px);}
+  .day .range{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(13px,1.4vw,16px); white-space:nowrap; text-align:right;}
+  .day .range .lo{color:var(--text-dim); font-weight:600;}
+  .updated{color:var(--text-dim); font-size:clamp(10px,1vw,12px); margin-top:12px; text-align:right;}
+  .announce{
+    background:linear-gradient(135deg, var(--accent), var(--rain)); border-radius:20px;
+    padding:clamp(16px,2vw,24px) clamp(18px,2.4vw,30px); color:#fff; box-shadow:var(--shadow);
+    display:flex; align-items:center; gap:18px; min-height:clamp(64px,9vh,110px);
+  }
+  .announce .lbl{font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; background:rgba(255,255,255,0.2); padding:5px 11px; border-radius:999px; flex-shrink:0;}
+  .announce .txt{font-family:'Manrope',sans-serif; font-weight:700; font-size:clamp(16px,2.1vw,26px); line-height:1.3; flex:1; white-space:pre-wrap;}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">
+    <div class="mark">🖥️</div>
+    <div>
+      <div class="name">Office Pulse</div>
+      <div class="sub">Tribeca, NY &middot; 10013</div>
+    </div>
+  </div>
+  <div class="clockbox">
+    <div class="clock" id="clock">--:--<span class="ampm" id="ampm"></span></div>
+    <div class="datestr" id="datestr">&nbsp;</div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Today &middot; Hour by Hour <span class="tag">New York, NY</span></h2>
+    <div class="now">
+      <div class="icon" id="nowIcon">🌤️</div>
+      <div>
+        <div class="temp" id="nowTemp">--°F</div>
+        <div class="cond" id="nowCond">Loading…</div>
+      </div>
+      <div style="flex:1"></div>
+      <div class="meta" id="nowMeta"></div>
+    </div>
+    <div class="hourly-row" id="hourlyRow"></div>
+  </div>
+
+  <div class="card">
+    <h2>Next Few Days</h2>
+    <div class="days" id="daysList"></div>
+    <div class="updated" id="updatedNote">Loading forecast…</div>
+  </div>
+</div>
+
+<div class="announce">
+  <div class="lbl">Announcement</div>
+  <div class="txt" id="announceText">Loading…</div>
+</div>
+
+<script>
+  var LAT = 40.72, LON = -74.01;
+  var TZ = "America/New_York";
+
+  // WMO weather codes -> emoji
+  function iconFor(code, isDay){
+    if(code===0) return isDay ? "☀️" : "🌙";
+    if(code===1) return isDay ? "🌤️" : "🌙";
+    if(code===2) return "⛅";
+    if(code===3) return "☁️";
+    if(code===45||code===48) return "🌫️";
+    if(code===51||code===53||code===55) return "🌦️";
+    if(code===56||code===57) return "🌧️";
+    if(code===61||code===63||code===65) return "🌧️";
+    if(code===66||code===67) return "🌧️";
+    if(code===71||code===73||code===75||code===77) return "❄️";
+    if(code===80||code===81||code===82) return "🌦️";
+    if(code===85||code===86) return "🌨️";
+    if(code===95||code===96||code===99) return "⛈️";
+    return "🌡️";
+  }
+  function condFor(code){
+    var m = {0:"Clear",1:"Mainly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Freezing fog",
+      51:"Light drizzle",53:"Drizzle",55:"Dense drizzle",56:"Freezing drizzle",57:"Freezing drizzle",
+      61:"Light rain",63:"Rain",65:"Heavy rain",66:"Freezing rain",67:"Freezing rain",
+      71:"Light snow",73:"Snow",75:"Heavy snow",77:"Snow grains",
+      80:"Rain showers",81:"Rain showers",82:"Violent showers",85:"Snow showers",86:"Snow showers",
+      95:"Thunderstorm",96:"Thunderstorm w/ hail",99:"Severe thunderstorm"};
+    return m[code] || "—";
+  }
+
+  function fmtHour(dateStr){
+    var d = new Date(dateStr);
+    var f = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour:'numeric' });
+    return f.format(d);
+  }
+  function hourNum(dateStr){
+    var d = new Date(dateStr);
+    var f = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour:'numeric', hourCycle:'h23' });
+    return parseInt(f.format(d),10);
+  }
+  function dayLabel(dateStr, idx){
+    var d = new Date(dateStr+"T12:00:00");
+    if(idx===0) return "Today";
+    var f = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday:'short' });
+    return f.format(d);
+  }
+  function dateSub(dateStr){
+    var d = new Date(dateStr+"T12:00:00");
+    var f = new Intl.DateTimeFormat('en-US', { timeZone: TZ, month:'numeric', day:'numeric' });
+    return f.format(d);
+  }
+
+  async function loadWeather(){
+    try{
+      var url = "https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+
+        "&current_weather=true&hourly=temperature_2m,precipitation_probability,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone="+encodeURIComponent(TZ)+"&forecast_days=7";
+      var res = await fetch(url, { cache: "no-store" });
+      var data = await res.json();
+
+      var cur = data.current_weather;
+      document.getElementById('nowIcon').textContent = iconFor(cur.weathercode, cur.is_day===1);
+      document.getElementById('nowTemp').textContent = Math.round(cur.temperature)+"°F";
+      document.getElementById('nowCond').textContent = condFor(cur.weathercode);
+      document.getElementById('nowMeta').textContent = "Wind " + Math.round(cur.windspeed) + " mph";
+
+      // Hourly: next 14 hours from now
+      var now = new Date();
+      var times = data.hourly.time;
+      var startIdx = 0;
+      for(var i=0;i<times.length;i++){ if(new Date(times[i]) >= now){ startIdx = i; break; } }
+      var hourlyHtml = "";
+      for(var j=startIdx; j<Math.min(startIdx+14, times.length); j++){
+        var t = fmtHour(times[j]);
+        var isDayHr = hourNum(times[j]) >= 6 && hourNum(times[j]) < 20;
+        var ic = iconFor(data.hourly.weathercode[j], isDayHr);
+        var temp = Math.round(data.hourly.temperature_2m[j]);
+        var pop = data.hourly.precipitation_probability[j];
+        hourlyHtml += '<div class="hour"><div class="t">'+t+'</div><div class="ic">'+ic+'</div>'+
+          '<div class="tp">'+temp+'°</div>'+
+          (pop>0 ? '<div class="pop">'+pop+'%</div>' : '<div class="pop">&nbsp;</div>')+'</div>';
+      }
+      document.getElementById('hourlyRow').innerHTML = hourlyHtml;
+
+      // Daily: today + next 5
+      var daysHtml = "";
+      for(var k=0; k<Math.min(6, data.daily.time.length); k++){
+        var name = dayLabel(data.daily.time[k], k);
+        var sub = dateSub(data.daily.time[k]);
+        var dic = iconFor(data.daily.weathercode[k], true);
+        var dcond = condFor(data.daily.weathercode[k]);
+        var hi = Math.round(data.daily.temperature_2m_max[k]);
+        var lo = Math.round(data.daily.temperature_2m_min[k]);
+        daysHtml += '<div class="day"><div class="name">'+name+'<span class="sub">'+sub+'</span></div>'+
+          '<div class="ic">'+dic+'</div><div class="cond">'+dcond+'</div>'+
+          '<div class="range">'+hi+'° <span class="lo">'+lo+'°</span></div></div>';
+      }
+      document.getElementById('daysList').innerHTML = daysHtml;
+
+      var nowFmt = new Intl.DateTimeFormat('en-US', { timeZone: TZ, month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
+      document.getElementById('updatedNote').textContent = "Weather refreshed " + nowFmt.format(new Date()) + " ET · Open-Meteo";
+    }catch(e){
+      document.getElementById('updatedNote').textContent = "Couldn't refresh weather — will retry.";
+    }
+  }
+
+  async function loadAnnouncement(){
+    try{
+      var res = await fetch('./announcement.txt', { cache: "no-store" });
+      if(!res.ok) throw new Error('no file');
+      var text = (await res.text()).trim();
+      document.getElementById('announceText').textContent = text || "Welcome to the office!";
+    }catch(e){
+      document.getElementById('announceText').textContent = "Welcome to the office!";
+    }
+  }
+
+  function tick(){
+    var now = new Date();
+    var timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour:'numeric', minute:'2-digit', second:'2-digit', hour12:true });
+    var parts = timeFmt.formatToParts(now);
+    var h='', m='', s='', ap='';
+    parts.forEach(function(p){
+      if(p.type==='hour') h=p.value;
+      if(p.type==='minute') m=p.value;
+      if(p.type==='second') s=p.value;
+      if(p.type==='dayPeriod') ap=p.value;
+    });
+    document.getElementById('clock').innerHTML = h+':'+m+':'+s+'<span class="ampm">'+ap+'</span>';
+    var dateFmt = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday:'long', month:'long', day:'numeric', year:'numeric' });
+    document.getElementById('datestr').textContent = dateFmt.format(now);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+  loadWeather();
+  loadAnnouncement();
+  setInterval(loadWeather, 30 * 60 * 1000);       // refresh weather every 30 min
+  setInterval(loadAnnouncement, 15 * 60 * 1000);   // pick up announcement edits every 15 min
+  setInterval(function(){ location.reload(); }, 12 * 60 * 60 * 1000); // safety full-reload every 12 hrs
+</script>
+</body>
+</html>
