@@ -51,12 +51,23 @@
     min-height:100vh; padding:clamp(14px,2vw,32px);
     display:flex; flex-direction:column; gap:clamp(12px,1.6vw,20px);
   }
-  .top{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;}
-  .clock{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(40px,7vw,86px); line-height:1; letter-spacing:-1px; white-space:nowrap;}
+  .top{
+    display:grid; grid-template-columns: 1fr auto 1fr; align-items:end;
+    gap:16px; width:100%;
+  }
+  .logo{justify-self:center; display:flex; align-items:flex-end;}
+  .logo img{
+    height:clamp(28px,4vw,52px); width:auto; display:block;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .logo img{ filter:invert(1) brightness(1.15); }
+  }
+  :root[data-theme="dark"] .logo img{ filter:invert(1) brightness(1.15); }
+  .clock{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(40px,7vw,86px); line-height:1; letter-spacing:-1px; white-space:nowrap; justify-self:start;}
   .clock .ampm{font-size:0.38em; color:var(--text-dim); margin-left:6px; font-weight:700;}
   .datestr{
     color:var(--text); font-family:'Manrope',sans-serif; font-weight:700;
-    font-size:clamp(20px,2.6vw,34px); text-align:right; line-height:1.2; margin-top:4px;
+    font-size:clamp(20px,2.6vw,34px); text-align:right; line-height:1; justify-self:end;
   }
   .grid{display:grid; grid-template-columns: 1.15fr 1fr; gap:clamp(12px,1.6vw,20px); flex:1; min-height:0;}
   @media (max-width: 900px){ .grid{grid-template-columns:1fr;} }
@@ -140,6 +151,7 @@
 
 <div class="top">
   <div class="clock" id="clock">--:--<span class="ampm" id="ampm"></span></div>
+  <div class="logo"><img src="./logo.png" alt="Artsy and Artnet"></div>
   <div class="datestr" id="datestr">&nbsp;</div>
 </div>
 
