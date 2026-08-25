@@ -113,8 +113,8 @@
     padding-bottom:4px; flex:1; align-items:center;
   }
   .hour{
-    background:var(--chip-bg); border-radius:18px; padding:14px 8px; text-align:center; min-width:64px;
-    border-bottom:4px solid var(--text-dim); display:flex; flex-direction:column; justify-content:center; gap:6px;
+    background:var(--chip-bg); border-radius:20px; padding:30px 16px; text-align:center; min-width:96px;
+    border-bottom:4px solid var(--text-dim); display:flex; flex-direction:column; justify-content:center; gap:8px;
   }
   .hour.cat-sun{border-bottom-color:var(--accent2);}
   .hour.cat-rain{border-bottom-color:var(--rain);}
@@ -274,7 +274,7 @@
         var pop = data.hourly.precipitation_probability[j];
         hourlyHtml += '<div class="hour cat-'+cat+'"><div class="t">'+t+'</div><div class="ic">'+ic+'</div>'+
           '<div class="tp">'+temp+'°</div>'+
-          (pop>0 ? '<div class="pop">'+pop+'%</div>' : '<div class="pop">&nbsp;</div>')+'</div>';
+          (pop>10 ? '<div class="pop">'+pop+'%</div>' : '<div class="pop">&nbsp;</div>')+'</div>';
       }
       document.getElementById('hourlyRow').innerHTML = hourlyHtml;
 
