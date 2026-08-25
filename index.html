@@ -65,56 +65,71 @@
   @media (max-width: 900px){ .grid{grid-template-columns:1fr;} }
   .card{
     background:var(--panel); border:1px solid var(--panel-border); border-radius:22px;
-    box-shadow:var(--shadow); padding:clamp(16px,2vw,26px);
+    box-shadow:var(--shadow); padding:clamp(18px,2.2vw,30px);
     border-top:5px solid var(--card-accent, var(--accent)); position:relative;
+    display:flex; flex-direction:column; height:100%; overflow:hidden;
   }
   .card.weather-card{--card-accent: var(--rain);}
   .card.days-card{--card-accent: var(--accent3);}
-  .card h2{margin:0 0 14px 0; font-family:'Manrope',sans-serif; font-size:clamp(14px,1.5vw,18px); font-weight:700; display:flex; align-items:center; gap:8px;}
-  .card h2 .tag{font-size:11px; font-weight:700; color:#fff; background:var(--card-accent, var(--accent)); padding:4px 10px; border-radius:999px; text-transform:uppercase; letter-spacing:.06em;}
-  .now{display:flex; align-items:center; gap:22px; margin-bottom:18px; flex-wrap:wrap;}
-  .now .icon{
-    font-size:clamp(38px,4.4vw,52px); line-height:1; width:clamp(70px,7vw,92px); height:clamp(70px,7vw,92px);
-    border-radius:20px; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(150deg, var(--rain), var(--accent3));
+  .card::after{
+    content:""; position:absolute; right:-40px; bottom:-40px; width:220px; height:220px;
+    border-radius:50%; background:radial-gradient(circle, var(--card-accent, var(--accent)) 0%, transparent 70%);
+    opacity:0.10; pointer-events:none;
   }
-  .now .temp{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(42px,5.5vw,60px); line-height:1; background:linear-gradient(120deg,var(--accent2),var(--accent3)); -webkit-background-clip:text; background-clip:text; color:transparent;}
-  .now .cond{color:var(--text-dim); font-size:clamp(14px,1.4vw,17px); font-weight:600;}
-  .now .meta{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px); margin-top:2px;}
-  .hourly-row{display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:9px; overflow-x:auto; padding-bottom:4px;}
+  .card h2{margin:0 0 16px 0; font-family:'Manrope',sans-serif; font-size:clamp(15px,1.6vw,19px); font-weight:700; display:flex; align-items:center; gap:8px; flex-shrink:0;}
+  .card h2 .tag{font-size:11px; font-weight:700; color:#fff; background:var(--card-accent, var(--accent)); padding:4px 10px; border-radius:999px; text-transform:uppercase; letter-spacing:.06em;}
+  .now{display:flex; align-items:center; gap:clamp(16px,2.4vw,30px); margin-bottom:20px; flex-wrap:wrap;}
+  .now .icon{
+    font-size:clamp(48px,6vw,72px); line-height:1; width:clamp(92px,10vw,130px); height:clamp(92px,10vw,130px);
+    border-radius:26px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    background:linear-gradient(150deg, var(--rain), var(--accent3));
+    box-shadow:var(--shadow);
+  }
+  .now .temp{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(48px,6.5vw,72px); line-height:1; background:linear-gradient(120deg,var(--accent2),var(--accent3)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .now .cond{color:var(--text-dim); font-size:clamp(15px,1.6vw,19px); font-weight:600;}
+  .now .stats{display:flex; gap:10px; flex-wrap:wrap; margin-left:auto;}
+  .now .stat{
+    background:var(--chip-bg); border-radius:14px; padding:10px 16px; text-align:center; min-width:78px;
+  }
+  .now .stat .v{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(16px,1.8vw,20px);}
+  .now .stat .k{color:var(--text-dim); font-size:clamp(9px,0.95vw,11px); font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-top:2px;}
+  .hourly-row{
+    display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:10px; overflow-x:auto;
+    padding-bottom:4px; flex:1; align-items:stretch;
+  }
   .hour{
-    background:var(--chip-bg); border-radius:16px; padding:12px 6px 14px; text-align:center; min-width:58px;
-    border-bottom:4px solid var(--rain);
+    background:var(--chip-bg); border-radius:18px; padding:14px 8px; text-align:center; min-width:64px;
+    border-bottom:4px solid var(--rain); display:flex; flex-direction:column; justify-content:center; gap:4px;
   }
   .hour:nth-child(3n+2){border-bottom-color:var(--accent3);}
   .hour:nth-child(3n+3){border-bottom-color:var(--accent2);}
-  .hour .t{font-size:clamp(10px,1vw,12px); color:var(--text-dim); font-weight:700;}
-  .hour .ic{font-size:clamp(20px,2.2vw,26px); margin:6px 0;}
-  .hour .tp{font-weight:800; font-size:clamp(14px,1.5vw,17px); font-family:'Manrope',sans-serif;}
-  .hour .pop{font-size:clamp(9px,0.95vw,11px); color:var(--rain); font-weight:700; margin-top:3px;}
-  .days{display:flex; flex-direction:column; gap:9px;}
+  .hour .t{font-size:clamp(11px,1.1vw,13px); color:var(--text-dim); font-weight:700;}
+  .hour .ic{font-size:clamp(26px,2.9vw,34px); margin:4px 0;}
+  .hour .tp{font-weight:800; font-size:clamp(16px,1.8vw,20px); font-family:'Manrope',sans-serif;}
+  .hour .pop{font-size:clamp(10px,1vw,12px); color:var(--rain); font-weight:700; margin-top:2px;}
+  .days{display:flex; flex-direction:column; gap:10px; flex:1; justify-content:space-between;}
   .day{
-    display:grid; grid-template-columns: 90px 44px 1fr auto; align-items:center; gap:12px;
-    padding:10px 12px; border-radius:16px; background:var(--chip-bg);
+    display:grid; grid-template-columns: 90px 52px 1fr auto; align-items:center; gap:14px;
+    padding:14px 16px; border-radius:18px; background:var(--chip-bg); flex:1;
   }
-  .day .name{font-weight:700; font-size:clamp(13px,1.3vw,15px);}
+  .day .name{font-weight:700; font-size:clamp(14px,1.4vw,17px);}
   .day .name .sub{display:block; color:var(--text-dim); font-weight:500; font-size:0.75em;}
   .day .ic{
-    font-size:clamp(16px,1.8vw,22px); text-align:center; width:38px; height:38px; border-radius:12px;
+    font-size:clamp(20px,2.2vw,28px); text-align:center; width:46px; height:46px; border-radius:14px;
     display:flex; align-items:center; justify-content:center;
     background:linear-gradient(150deg, var(--accent4), var(--accent));
   }
-  .day .cond{color:var(--text-dim); font-size:clamp(11px,1.1vw,13px);}
-  .day .range{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(13px,1.4vw,16px); white-space:nowrap; text-align:right; color:var(--accent2);}
+  .day .cond{color:var(--text-dim); font-size:clamp(12px,1.2vw,14px);}
+  .day .range{font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(14px,1.5vw,18px); white-space:nowrap; text-align:right; color:var(--accent2);}
   .day .range .lo{color:var(--text-dim); font-weight:600;}
-  .updated{color:var(--text-dim); font-size:clamp(10px,1vw,12px); margin-top:12px; text-align:right;}
+  .updated{color:var(--text-dim); font-size:clamp(10px,1vw,12px); margin-top:12px; text-align:right; flex-shrink:0;}
   .announce{
-    background:linear-gradient(120deg, var(--accent2), var(--accent3) 55%, var(--accent)); border-radius:20px;
-    padding:clamp(16px,2vw,24px) clamp(18px,2.4vw,30px); color:#fff; box-shadow:var(--shadow);
-    display:flex; align-items:center; gap:18px; min-height:clamp(64px,9vh,110px);
+    background:linear-gradient(120deg, var(--accent2), var(--accent3) 55%, var(--accent)); border-radius:22px;
+    padding:clamp(22px,3vw,34px) clamp(24px,3.2vw,40px); color:#fff; box-shadow:var(--shadow);
+    display:flex; align-items:center; gap:22px; min-height:clamp(90px,13vh,160px);
   }
-  .announce .lbl{font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; background:rgba(255,255,255,0.2); padding:5px 11px; border-radius:999px; flex-shrink:0;}
-  .announce .txt{font-family:'Manrope',sans-serif; font-weight:700; font-size:clamp(16px,2.1vw,26px); line-height:1.3; flex:1; white-space:pre-wrap;}
+  .announce .lbl{font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; background:rgba(255,255,255,0.2); padding:6px 13px; border-radius:999px; flex-shrink:0;}
+  .announce .txt{font-family:'Manrope',sans-serif; font-weight:700; font-size:clamp(20px,2.7vw,32px); line-height:1.3; flex:1; white-space:pre-wrap;}
 </style>
 </head>
 <body>
@@ -142,8 +157,11 @@
         <div class="temp" id="nowTemp">--°F</div>
         <div class="cond" id="nowCond">Loading…</div>
       </div>
-      <div style="flex:1"></div>
-      <div class="meta" id="nowMeta"></div>
+      <div class="stats">
+        <div class="stat"><div class="v" id="statFeels">--°</div><div class="k">Feels like</div></div>
+        <div class="stat"><div class="v" id="statHumidity">--%</div><div class="k">Humidity</div></div>
+        <div class="stat"><div class="v" id="statWind">-- mph</div><div class="k">Wind</div></div>
+      </div>
     </div>
     <div class="hourly-row" id="hourlyRow"></div>
   </div>
@@ -216,7 +234,7 @@
   async function loadWeather(){
     try{
       var url = "https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+
-        "&current_weather=true&hourly=temperature_2m,precipitation_probability,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone="+encodeURIComponent(TZ)+"&forecast_days=7";
+        "&current_weather=true&hourly=temperature_2m,precipitation_probability,weathercode,relative_humidity_2m,apparent_temperature&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone="+encodeURIComponent(TZ)+"&forecast_days=7";
       var res = await fetch(url, { cache: "no-store" });
       var data = await res.json();
 
@@ -224,13 +242,16 @@
       document.getElementById('nowIcon').textContent = iconFor(cur.weathercode, cur.is_day===1);
       document.getElementById('nowTemp').textContent = Math.round(cur.temperature)+"°F";
       document.getElementById('nowCond').textContent = condFor(cur.weathercode);
-      document.getElementById('nowMeta').textContent = "Wind " + Math.round(cur.windspeed) + " mph";
 
       // Hourly: next 14 hours from now
       var now = new Date();
       var times = data.hourly.time;
       var startIdx = 0;
       for(var i=0;i<times.length;i++){ if(new Date(times[i]) >= now){ startIdx = i; break; } }
+
+      document.getElementById('statFeels').textContent = Math.round(data.hourly.apparent_temperature[startIdx])+"°";
+      document.getElementById('statHumidity').textContent = Math.round(data.hourly.relative_humidity_2m[startIdx])+"%";
+      document.getElementById('statWind').textContent = Math.round(cur.windspeed)+" mph";
       var hourlyHtml = "";
       for(var j=startIdx; j<Math.min(startIdx+14, times.length); j++){
         var t = fmtHour(times[j]);
@@ -279,22 +300,21 @@
 
   function tick(){
     var now = new Date();
-    var timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour:'numeric', minute:'2-digit', second:'2-digit', hour12:true });
+    var timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour:'numeric', minute:'2-digit', hour12:true });
     var parts = timeFmt.formatToParts(now);
-    var h='', m='', s='', ap='';
+    var h='', m='', ap='';
     parts.forEach(function(p){
       if(p.type==='hour') h=p.value;
       if(p.type==='minute') m=p.value;
-      if(p.type==='second') s=p.value;
       if(p.type==='dayPeriod') ap=p.value;
     });
-    document.getElementById('clock').innerHTML = h+':'+m+':'+s+'<span class="ampm">'+ap+'</span>';
+    document.getElementById('clock').innerHTML = h+':'+m+'<span class="ampm">'+ap+'</span>';
     var dateFmt = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday:'long', month:'long', day:'numeric', year:'numeric' });
     document.getElementById('datestr').textContent = dateFmt.format(now);
   }
 
   tick();
-  setInterval(tick, 1000);
+  setInterval(tick, 15000);
   loadWeather();
   loadAnnouncement();
   setInterval(loadWeather, 30 * 60 * 1000);       // refresh weather every 30 min
