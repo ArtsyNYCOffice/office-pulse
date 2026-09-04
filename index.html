@@ -299,6 +299,7 @@
       var nowFmt = new Intl.DateTimeFormat('en-US', { timeZone: TZ, month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
       document.getElementById('updatedNote').textContent = "Weather refreshed " + nowFmt.format(new Date()) + " ET · Open-Meteo";
     }catch(e){
+      console.error('Office Pulse: weather fetch failed —', e);
       document.getElementById('updatedNote').textContent = "Couldn't refresh weather — will retry.";
     }
   }
